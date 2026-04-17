@@ -39,7 +39,7 @@ Project Structure
 - A920Driver.js          - TCP/JSON Implementation
 - IM30Driver.js          - Serial/BCD Implementation
 - TerminalFactory.js     - Dynamic driver instantiation logic
-- Server.js              - WebSocket server entry point
+- index.js              - WebSocket server entry point
 
 Disclosure & NDA
 Notice: This repository is an architectural showcase. Due to non-disclosure agreements (NDA) with the client, proprietary business logic, sensitive IP addresses, and private encryption keys have been abstracted or removed. The code focuses on demonstrating system integration, protocol parsing, and hardware orchestration capabilities.
