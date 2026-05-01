@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUD Kiosk - Payment Demo</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .kiosk-container { background: #fff; width: 450px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; }
+        .logo { font-size: 28px; font-weight: bold; color: #e74c3c; margin-bottom: 5px; }
+        .subtitle { color: #7f8c8d; font-size: 14px; margin-bottom: 30px; }
+        .ticket-option { border: 2px solid #ecf0f1; border-radius: 10px; padding: 20px; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
+        .ticket-option:hover { border-color: #3498db; background: #f7fbfe; }
+        .status-box { margin-top: 25px; padding: 15px; border-radius: 8px; font-weight: bold; min-height: 20px; }
+        .idle { background: #ecf0f1; color: #7f8c8d; }
+        .processing { background: #fff3cd; color: #856404; }
+        .success { background: #d4edda; color: #155724; }
+        .log-window { margin-top: 20px; background: #2c3e50; color: #27ae60; padding: 10px; font-family: 'Courier New', Courier, monospace; font-size: 11px; border-radius: 5px; text-align: left; height: 80px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+
+<div class="kiosk-container">
+    <div class="logo">RUD GO-KART</div>
+    <div class="subtitle">Self-Service Ticket Kiosk (IM30 Demo)</div>
+
+    <div class="ticket-option" onclick="pay(5000, '00')">
+        <strong>Single Race Ticket</strong><br>RM 50.00 (Card Payment)
+    </div>
+
+    <div class="ticket-option" onclick="pay(9000, '01')">
+        <strong>Double Race Ticket</strong><br>RM 90.00 (QR Wallet)
+    </div>
+
+    <div id="status" class="status-box idle">Ready to Purchase</div>
+
+    <div class="log-window" id="logs">
+        > System standby...
+    </div>
+</div>
+
+<script>
+    const socket = new WebSocket('ws://localhost:8081');
+    const statusBox = document.getElementById('status');
+    const logWindow = document.getElementById('logs');
+
+    function log(msg) {
+        logWindow.innerHTML += `<br>> ${msg}`;
+        logWindow.scrollTop = logWindow.scrollHeight;
+    }
+
+    socket.onopen = () => log("Connected to RUD Gateway Service");
+
+    socket.onmessage = (event) => {
+        log("Received: " + event.data);
+        if (event.data.includes('terminal_approved')) {
+            const [_, tid, amount] = event.data.split('|');
+            statusBox.className = "status-box success";
+            statusBox.innerText = `APPROVED! RM${amount} Paid.`;
+            log("Printing Ticket with QR Code...");
+        } else if (event.data.includes('terminal_declined')) {
+            statusBox.className = "status-box idle";
+            statusBox.innerText = "Transaction Declined. Please retry.";
+        }
+    };
+
+    function pay(amount, type) {
+        const tid = "TID" + Math.floor(Math.random()*10000);
+        statusBox.className = "status-box processing";
+        statusBox.innerText = "Processing... Please follow terminal";
+        
+        const payload = {
+            op: "sale",
+            tid: tid,
+            amount: amount,
+            sales_type: type // 00=Card, 01=QR
+        };
+
+        socket.send(JSON.stringify(payload));
+        log(`Sending ${type === '00' ? 'Card' : 'QR'} Sale: RM${amount/100}`);
+    }
+</script>
+
+</body>
+</html>
