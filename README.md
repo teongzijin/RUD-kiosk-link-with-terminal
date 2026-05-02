@@ -35,11 +35,3 @@ In a real-world kiosk environment, software stability is challenged by hardware 
    *This will launch the WebSocket server and the Hardware Simulator.*
 4. **Access the Kiosk UI**: Open `public/index.html` in your browser.
 
-## Technical Deep Dive: LRC Calculation
-The project implements the Longitudinal Redundancy Check (LRC) required by PAX ECR:
-```typescript
-function calcLRC(buf: Buffer): number {
-  let x = 0;
-  for (const b of buf) x ^= b;
-  return x & 0xFF;
-}
