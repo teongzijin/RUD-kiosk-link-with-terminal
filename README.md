@@ -29,7 +29,7 @@ In a real-world kiosk environment, software stability is challenged by hardware 
 - **Reliability Engineering**: Handles common terminal errors like `TO` (Timeout) and `LC` (Line Control Loss) with automatic frame re-sending[cite: 1].
 
 ## Quick Start (Demo Mode)
-1. **Clone the repo**: `git clone <your-repo-link>`
+1. **Clone the repo**: `git clone https://github.com/teongzijin/kiosk-link-with-terminal.git`
 2. **Install dependencies**: `npm install`
 3. **Start the service**: `npm run demo`
    *This will launch the WebSocket server and the Hardware Simulator.*
