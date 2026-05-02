@@ -1,4 +1,4 @@
-# Project Background: The RUD Ecosystem
+# Project Background: The Ecosystem
 
 RUD is a comprehensive O2O ecosystem designed for the modern go-karting industry. It seamlessly integrates on-site hardware with mobile convenience to streamline the user journey from ticket purchase to the podium.  The full ecosystem consists of:
 1. Smart Kiosk Terminal: A self-service station that integrates with PAX A920/IM30 for secure on-site payments. It issues physical tickets with QR codes, which staff scan to assign karts and manage track entry.
@@ -7,9 +7,9 @@ RUD is a comprehensive O2O ecosystem designed for the modern go-karting industry
 
 Note: This repository specifically demonstrates the IM30 Payment Integration Layer—the critical bridge between the Kiosk UI and the hardware terminal. 
 
-# RUD Kiosk Payment Gateway (IM30 Integration)
+# Kiosk Payment Gateway (IM30 Integration)
 
-A robust Node.js & TypeScript payment middleware designed for the **RUD Go-Kart Ecosystem**. This gateway handles the complex communication between a Windows-based Kiosk UI and the **PAX IM30** hardware terminal.
+A robust Node.js & TypeScript payment middleware designed for the **Go-Kart Ecosystem**. This gateway handles the complex communication between a Windows-based Kiosk UI and the **PAX IM30** hardware terminal.
 
 ## The Core Problem Solved
 In a real-world kiosk environment, software stability is challenged by hardware latency and OS-level driver conflicts. This project addresses:
