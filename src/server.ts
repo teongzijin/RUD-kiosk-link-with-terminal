@@ -90,7 +90,7 @@ class RUDPaymentGateway {
 
     private getComPort(): string {
         try {
-            const configPath = path.join(__dirname, 'im30_config.txt');
+            const configPath = path.join(__dirname, '../im30_config.txt');
             return fs.readFileSync(configPath, 'utf8').trim();
         } catch (e) {
             return 'COM3'; // Default fallback
