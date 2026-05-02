@@ -1,0 +1,4 @@
+node_modules/
+dist/
+im30_config.txt
+.DS_Store
